@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid meet">
+  <g fill="#000" fill-opacity="0.95">
+    <!-- simplified painterly samurai silhouette -->
+    <path d="M300 480 C320 360 380 300 460 280 C540 260 620 270 700 290 C760 305 820 360 860 480 L820 480 C800 380 740 340 700 320 C640 300 580 295 520 310 C460 325 420 360 400 420 C380 470 360 500 300 480 Z"/>
+    <path d="M520 320 L480 260 L520 240 L540 220 L620 240 L640 260 L600 320 Z"/>
+    <path d="M720 280 L760 240 L820 230 L820 250 L780 290 Z"/>
+  </g>
+</svg>

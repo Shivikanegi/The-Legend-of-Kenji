@@ -4,260 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Legend of Kenji | An AI Storytelling Project</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+JP:wght@300;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --ink-black: #0a0a0a;
-            --shrine-red: #8b0000;
-            --blossom-pink: #ffb7c5;
-            --gold: #c5a059;
-            --text-gray: #d1d1d1;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--ink-black);
-            color: var(--text-gray);
-            font-family: 'Noto Serif JP', serif;
-            line-height: 1.6;
-        }
-
-        /* Hero Section */
-        header {
-            position: relative;
-            height: 100vh;
-            /* keep a background fallback if image missing */
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), 
-                        url('cover.png') center/cover no-repeat;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            border-bottom: 2px solid var(--gold);
-            overflow: hidden;
-        }
-
-        /* Hero placeholder figure — fill the header completely */
-        .hero-figure {
-            position: absolute;
-            inset: 0; /* top:0; right:0; bottom:0; left:0 */
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            overflow: hidden;
-            border-radius: 0; /* full-bleed inside header */
-            box-shadow: none;
-            border: 0;
-            transition: transform 300ms ease, box-shadow 300ms ease;
-            z-index: 0;
-        }
-
-        /* overlay to preserve the dark gradient for legibility */
-        .hero-figure::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.85) 100%);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .hero-figure img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transform-origin: center center;
-            transition: transform 400ms ease, filter 300ms ease;
-            filter: saturate(0.95) contrast(0.95);
-        }
-
-        .hero-figure:hover img {
-            transform: scale(1.03);
-            filter: saturate(1.03) contrast(1.02);
-        }
-
-        /* place content above the image */
-        header > h1,
-        header > .subtitle,
-        header > .audio-container {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Small caption overlay (visually subtle) */
-        .hero-caption {
-            position: relative;
-            margin-top: 8px;
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            opacity: 0.95;
-            z-index: 2;
-        }
-
-        h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 4rem;
-            color: white;
-            margin: 0;
-            text-shadow: 0 0 20px rgba(197, 160, 89, 0.5);
-        }
-
-        .subtitle {
-            font-style: italic;
-            color: var(--blossom-pink);
-            letter-spacing: 3px;
-            margin-top: 10px;
-        }
-
-        /* Audio Player Styling */
-        .audio-container {
-            margin-top: 30px;
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 50px;
-            backdrop-filter: blur(5px);
-        }
-
-        /* Content Sections */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        .story-text {
-            font-size: 1.2rem;
-            white-space: pre-line;
-            text-align: center;
-            color: #eee;
-        }
-
-        .dropcap {
-            float: left;
-            font-family: 'Cinzel', serif;
-            font-size: 4rem;
-            line-height: 1;
-            padding-right: 10px;
-            color: var(--gold);
-        }
-
-        /* Character Gallery (Step 7) */
-        .section-title {
-            text-align: center;
-            font-family: 'Cinzel', serif;
-            color: var(--gold);
-            font-size: 2rem;
-            margin-bottom: 50px;
-            border-bottom: 1px solid var(--gold);
-            display: inline-block;
-            width: 100%;
-        }
-
-        .character-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .character-card {
-            background: #151515;
-            border: 1px solid #333;
-            transition: 0.3s;
-            text-align: center;
-            padding-bottom: 20px;
-        }
-
-        .character-card:hover {
-            border-color: var(--blossom-pink);
-            transform: translateY(-5px);
-        }
-
-        .character-card img {
-            width: 100%;
-            height: 350px;
-            object-fit: contain;
-            background: #0f0f0f;
-            padding: 10px 0;
-        }
-
-        .character-card h3 {
-            color: var(--gold);
-            margin: 15px 0 5px 0;
-        }
-
-        /* Footer Info */
-        footer {
-            background: #000;
-            padding: 40px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #555;
-            border-top: 1px solid #222;
-        }
-
-        .process-tag {
-            display: inline-block;
-            padding: 5px 15px;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            margin: 5px;
-            border-radius: 20px;
-        }
-
-        /* Small floating toast to prompt users to enable audio */
-        .audio-toast {
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: 24px;
-            z-index: 9999;
-            background: rgba(0,0,0,0.65);
-            color: #fff;
-            padding: 8px 10px;
-            border-radius: 999px;
-            display: none;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.45);
-        }
-
-        .audio-toast .enable-audio-btn {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.12);
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 999px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .audio-toast .enable-audio-btn:hover {
-            background: rgba(255,255,255,0.12);
-        }
-
-        .audio-toast .dismiss-audio-toast {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 1rem;
-            padding: 4px;
-            cursor: pointer;
-            opacity: 0.9;
-        }
-
-        .audio-toast.hidden {
-            opacity: 0;
-            transform: translateX(-50%) translateY(8px);
-            transition: opacity .22s, transform .22s;
-            pointer-events: none;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Serif+JP:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/theme.css">
 </head>
 <body>
 
@@ -266,20 +16,34 @@
         <figure class="hero-figure" aria-hidden="false">
             <img src="cover.png" alt="Cover artwork for The Legend of Kenji">
         </figure>
+        <img class="hero-silhouette" src="assets/hero-silhouette.svg" alt="" aria-hidden="true">
+        <div class="petal-canvas" aria-hidden="true"></div>
         <h1>The Legend of Kenji</h1>
-        <p class="subtitle">And the Last Blossom</p>
         
         <!-- Step 6: Audio Narration -->
         <div class="audio-container">
-            <p style="margin: 0 0 10px 0; font-size: 0.8rem;">LISTEN TO THE NARRATION</p>
+            <div class="audio-petal-accent" aria-hidden="true"></div>
+            <div class="audio-header">
+                <svg class="audio-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2c1.2 2.6 3.8 3 5 5c-2 0-3 1.4-4 2.8C12.8 10.8 11.6 12 10 12c-1.8 0-2.6-1.6-3.6-2.2C4.8 9.2 3.8 8.8 2 8c1.4-2 3.6-3 5-6 1.8 2 4.2 1.6 5 0z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="audio-title">The Legend Narration</span>
+            </div>
             <audio controls>
                 <source src="audio.wav" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
         </div>
         <!-- Additional audio playback (alternate soundtrack / ambient) -->
-        <div class="audio-container" style="margin-top:12px;">
-            <p style="margin: 0 0 10px 0; font-size: 0.8rem;">PLAY AMBIENT SOUNDTRACK</p>
+        <div class="audio-container">
+            <div class="audio-petal-accent" aria-hidden="true"></div>
+            <div class="audio-header">
+                <svg class="audio-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2c1.2 2.6 3.8 3 5 5c-2 0-3 1.4-4 2.8C12.8 10.8 11.6 12 10 12c-1.8 0-2.6-1.6-3.6-2.2C4.8 9.2 3.8 8.8 2 8c1.4-2 3.6-3 5-6 1.8 2 4.2 1.6 5 0z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="audio-title">Blade of the Turning Sky</span>
+            </div>
+            <div class="audio-meta" aria-hidden="true">Background music</div>
             <audio id="ambient-audio" controls loop autoplay playsinline aria-label="Ambient soundtrack: Blade of the Turning Sky">
                 <source src="Blade of the Turning Sky.mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
@@ -347,6 +111,7 @@
         <p style="margin-top: 20px;">&copy; 2024 AI Storytelling Project Showcase</p>
     </footer>
 
+        <script src="scripts/petals.js" defer></script>
         <script>
             (function () {
                 const ambient = document.getElementById('ambient-audio');
